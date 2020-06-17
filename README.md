@@ -6,4 +6,4 @@
 
 201524473 H.J Bang 
 
-201524527 S.J Lee
+201524527 S.J Lee join
