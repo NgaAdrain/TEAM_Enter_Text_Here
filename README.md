@@ -4,6 +4,6 @@
 
 201524582 H.S Jeong 
 
-201524473 H.J Bang 
+201524473 H.J Bang join
 
 201524527 S.J Lee join
