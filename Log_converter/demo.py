@@ -44,7 +44,7 @@ def save(fname, data, index):
         del dlist[4]
         del dlist[2]
         del dlist[1]
-        dlist[-1] = 0
+        dlist[-1] = (float(dlist[-3]) * 1) + (float(dlist[-2])) * 2
         wr.writerow(dlist)
         index += 1
     fout.close()
