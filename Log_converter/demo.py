@@ -13,27 +13,40 @@ OUT_LOCATION = r'.\csv_data'
 # )
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.dat')]
 
-DATA_TYPE = ' Timestamp,Odometer,Gear(dashboard),RPM,\
-Fuel_level,Avg_fuel_consumption,Velocity,\
-Acceleration_x,Acceleration_y,Acceleration_z,\
-Coordinate(location)_x,Coordinate(location)_y,Coordinate(location)_z,\
-Rotation_angle_x,Rotation_angle_y,Rotation_angle_z,\
-Steering_wheel_x,Accelerator,Brake,Clutch,Winker(left),Winker(right)'
+DATA_TYPE = 'Timestamp,RPM,Velocity,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label'
 
-def save(fname, data):
+
+def save(fname, data, index):
     out_name = fname[:-4] + '.csv'
     out_file = os.path.join(OUT_LOCATION, out_name)
     fout = open(out_file, 'w', encoding='utf-8', newline='')
     wr = csv.writer(fout)
-    
-    # list name 
+
+    # list name
     element_type = str(DATA_TYPE).split(',')
     wr.writerow(element_type)
 
     # data input
+
     for element in data:
         dlist = str(element).split(',')
+        del dlist[19]
+        del dlist[15]
+        del dlist[14]
+        del dlist[13]
+        del dlist[12]
+        del dlist[11]
+        del dlist[10]
+        del dlist[9]
+        del dlist[8]
+        del dlist[7]
+        del dlist[5]
+        del dlist[4]
+        del dlist[2]
+        del dlist[1]
+        dlist[-1] = 0
         wr.writerow(dlist)
+        index += 1
     fout.close()
 
 
@@ -47,7 +60,9 @@ def read(fpath):
 
 if __name__ == '__main__':
     log = Simlog_pb2.Simlog()
+    index = 0
     for fname in TARGET_FILE:
         curr_file = os.path.join(TARGET_LOCATION, fname)
         data = read(curr_file)
-        save(fname, data)
+        save(fname, data, index)
+
