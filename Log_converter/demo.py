@@ -13,7 +13,7 @@ OUT_LOCATION = r'.\csv_data'
 # )
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.dat')]
 
-DATA_TYPE = 'Timestamp,RPM,Velocity,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label1,Label2'
+DATA_TYPE = 'Timestamp,RPM,Velocity,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label1'
 
 
 def save(fname, data, index):
@@ -45,13 +45,16 @@ def save(fname, data, index):
         del dlist[2]
         del dlist[1]
         dlist[-1] = (float(dlist[-3]) * 1) + (float(dlist[-2])) * 2
+        """
         if float(dlist[4])>0:
             dlist.append(1)
         elif float(dlist[5])>0:
             dlist.append(2)
         else:
             dlist.append(0)
+            """
         wr.writerow(dlist)
+
         index += 1
     fout.close()
 
