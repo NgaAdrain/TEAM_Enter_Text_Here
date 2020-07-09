@@ -6,9 +6,9 @@ from loader.ets2data import Ets2Data
 from loader import Simlog_pb2
 
 #TARGET_LOCATION = r'\Users\cherr\Documents\GitHub\TEAM_Enter_Text_Here\Log_converter\log_data'
-TARGET_LOCATION =  os.getcwd()
+TARGET_LOCATION =  os.getcwd() + r'..\log_data'
 #OUT_LOCATION = r'\Users\cherr\Documents\GitHub\TEAM_Enter_Text_Here\Log_converter\csv_data'
-OUT_LOCATION = os.getcwd()
+OUT_LOCATION = os.getcwd() + r'..\log_data'
 
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.dat')]
 DATA_TYPE = 'Timestamp,RPM,Velocity,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label'

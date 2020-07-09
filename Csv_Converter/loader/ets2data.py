@@ -87,7 +87,6 @@ class Controls:
     def __str__(self):
         substr = str(self.userSteer) + ', '
         substr += str(self.userThrottle) + ', '
-        substr += str(self.userBrake)
         substr += str(self.userBrake) + ', '
         substr += str(self.userClutch)
         return substr
