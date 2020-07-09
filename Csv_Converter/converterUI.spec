@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['converterUI.py'],
-             pathex=['C:\\Users\\cherr\\PycharmProjects\\csvconverter'],
+             pathex=['C:\\Users\\cherr\\Documents\\GitHub\\TEAM_Enter_Text_Here\\Csv_Converter'],
              binaries=[],
              datas=[],
              hiddenimports=[],
