@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/angleY"
-        android:layout_width="148dp"
+        android:layout_width="196dp"
         android:layout_height="42dp"
         android:text="Angle : "
         android:textSize="30dp"

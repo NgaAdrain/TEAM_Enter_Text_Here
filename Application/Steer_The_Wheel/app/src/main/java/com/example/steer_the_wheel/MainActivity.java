@@ -128,7 +128,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         //System.out.println("accelXValue="+accelXValue);
         //System.out.println("accelYValue="+accelYValue);
         //System.out.println("accelZValue="+accelZValue);
-        textView1.setText("Angle Y : "+accelYValue);
+        textView1.setText("Angle : "+accelYValue);
         if(mThreadConnectedBluetooth != null) {
             mThreadConnectedBluetooth.write(textView1.getText().toString());
         }
