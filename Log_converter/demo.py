@@ -48,18 +48,21 @@ def save(fname, data, index):
         del dlist[2]
         del dlist[1]
 
-        if int(dlist[6]) == 1:
+        if float(dlist[6]) == 1:
             dlist[-1] = 1
             cnt1 = 10
-        elif int(dlist[6]) == 0 and 30 > cnt1 >= 10:
+        elif float(dlist[6]) == 0 and 30 > cnt1 >= 10:
             dlist[-1] = 1
             cnt1 += 1
-        elif int(dlist[7]) == 1:
+        elif float(dlist[7]) == 1:
             dlist[-1] = 2
-            cnt1 = 10
-        elif int(dlist[7]) == 0 and 30 > cnt1 >= 10:
+            cnt1 = 40
+        elif float(dlist[7]) == 0 and 60 > cnt1 >= 40:
             dlist[-1] = 2
             cnt1 += 1
+        elif cnt1 == 30 or cnt1 == 60:
+            dlist[-1] = 100
+            cnt1 = 0
         else:
             dlist[-1] = 0
             cnt1 = 0
