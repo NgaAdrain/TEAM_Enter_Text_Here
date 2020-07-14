@@ -13,7 +13,7 @@ OUT_LOCATION = r'.\csv_data'
 # )
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.dat')]
 
-DATA_TYPE = 'Timestamp,RPM,Velocity,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label1'
+DATA_TYPE = 'Timestamp,RPM,Velocity,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label1,Label2'
 
 
 def save(fname, data, index):
@@ -21,6 +21,9 @@ def save(fname, data, index):
     out_file = os.path.join(OUT_LOCATION, out_name)
     fout = open(out_file, 'w', encoding='utf-8', newline='')
     wr = csv.writer(fout)
+    cnt1 = 0
+    cnt2 = 0
+    line_cnt = 0
 
     # list name
     element_type = str(DATA_TYPE).split(',')
@@ -44,15 +47,33 @@ def save(fname, data, index):
         del dlist[4]
         del dlist[2]
         del dlist[1]
-        dlist[-1] = (float(dlist[-3]) * 1) + (float(dlist[-2])) * 2
-        """
+
+        if int(dlist[6]) == 1:
+            dlist[-1] = 1
+            cnt1 = 10
+        elif int(dlist[6]) == 0 and 30 > cnt1 >= 10:
+            dlist[-1] = 1
+            cnt1 += 1
+        elif int(dlist[7]) == 1:
+            dlist[-1] = 2
+            cnt1 = 10
+        elif int(dlist[7]) == 0 and 30 > cnt1 >= 10:
+            dlist[-1] = 2
+            cnt1 += 1
+        else:
+            dlist[-1] = 0
+            cnt1 = 0
+
         if float(dlist[4])>0:
-            dlist.append(1)
+            if float(dlist[5])>0:
+                dlist.append(3)
+            else:
+                dlist.append(1)
         elif float(dlist[5])>0:
             dlist.append(2)
         else:
             dlist.append(0)
-            """
+
         wr.writerow(dlist)
 
         index += 1
