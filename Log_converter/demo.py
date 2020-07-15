@@ -97,31 +97,27 @@ def save(fname, data, index):
         dlist[3] = round(float(dlist[3]), 6)
         dlist[4] = round(float(dlist[4]), 6)
         dlist[-1] = 0
-        
-        if float(dlist[5]) > angle_limit:
-            if float(dlist[8]) == 1:
-                dlist[-1] = 3
-                cnt1 = 10
-            elif float(dlist[8]) == 0 and 30 > cnt1 >= 10:
-                dlist[-1] = 3
-                cnt1 += 1
-            elif cnt1 == 30:
-                dlist[-1] = 3
-                cnt1 = 0
-            else:
-                dlist[-1] = 1
-        if float(dlist[5]) < -1 * angle_limit:
-            if float(dlist[9]) == 1:
-                dlist[-1] = 4
-                cnt1 = 40
-            elif float(dlist[9]) == 0 and 60 > cnt1 >= 40:
-                dlist[-1] = 4
-                cnt1 += 1
-            elif cnt1 == 60:
-                dlist[-1] = 4
-                cnt1 = 0
-            else:
-                dlist[-1] = 2
+        if float(dlist[8]) == 1:
+            dlist[-1] = 3
+            cnt1 = 10
+        elif float(dlist[8]) == 0 and 30 > cnt1 >= 10:
+            dlist[-1] = 3
+            cnt1 += 1
+        elif float(dlist[9]) == 1:
+            dlist[-1] = 4
+            cnt1 = 40
+        elif float(dlist[9]) == 0 and 60 > cnt1 >= 40:
+            dlist[-1] = 4
+            cnt1 += 1
+        elif cnt1 == 30 or cnt1 == 60:
+            cnt1 = 0
+        elif float(dlist[5]) > angle_limit:
+            dlist[-1] = 1
+            cnt1 = 0
+        elif float(dlist[5]) < -1 * angle_limit:
+            dlist[-1] = 2
+            cnt1 = 0
+
         """
         if cnt1 == 0:
             if float(dlist[5]) > angle_limit:
