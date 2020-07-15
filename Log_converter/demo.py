@@ -97,6 +97,7 @@ def save(fname, data, index):
         dlist[3] = round(float(dlist[3]), 6)
         dlist[4] = round(float(dlist[4]), 6)
         dlist[-1] = 0
+        
         if float(dlist[5]) > angle_limit:
             if float(dlist[8]) == 1:
                 dlist[-1] = 3
