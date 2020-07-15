@@ -23,6 +23,8 @@ def save(fname, data, index):
     wr = csv.writer(fout)
     cnt1 = 0
     cnt2 = 0
+    left_most = 0
+    right_most = 0
     line_cnt = 0
 
     # list name
@@ -47,7 +49,7 @@ def save(fname, data, index):
         del dlist[4]
         del dlist[2]
         del dlist[1]
-
+        """
         if float(dlist[6]) == 1:
             dlist[-1] = 1
             cnt1 = 10
@@ -66,7 +68,33 @@ def save(fname, data, index):
         else:
             dlist[-1] = 0
             cnt1 = 0
+        """
+        dlist[-1] = 0
+        if float(dlist[3]) > 0.01:
+            dlist[-1] = 1
+            if float(dlist[3]) > cnt1:
+                left_most = float(dlist[3])
+            if cnt2 == 0:
+                cnt2 = 1
+            elif cnt2 == 1:
+                cnt2 = 2
 
+        elif float(dlist[3]) < -0.01:
+            dlist[-1] = 2
+            if float(dlist[3]) < cnt1:
+                right_most = float(dlist[3])
+            if cnt2 == 0:
+                cnt2 = 1
+            elif cnt2 == 1:
+                cnt2 = 2
+        if cnt2 == 2:
+            if left_most > right_most * 0.7 and dlist[-1] == 2:
+                dlist[-1] = 500
+            elif right_most > left_most * 0.7 and dlist[-1] == 1:
+                dlist[-1] = 400
+            left_most = 0
+            right_most = 0
+        cnt2 = 0
         if float(dlist[4])>0:
             if float(dlist[5])>0:
                 dlist.append(3)
@@ -76,6 +104,7 @@ def save(fname, data, index):
             dlist.append(2)
         else:
             dlist.append(0)
+        dlist[3] = round(float(dlist[3]),4)
 
         wr.writerow(dlist)
 
