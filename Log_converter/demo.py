@@ -27,7 +27,7 @@ def save(fname, data, index):
     right_most = 0
     line_cnt = 0
     label = 0
-    angle_limit = 8
+    angle_limit = 7
 
     # list name
     element_type = str(DATA_TYPE).split(',')
@@ -69,16 +69,16 @@ def save(fname, data, index):
         del dlist[0] #timestamp
         """
         """
-        if float(dlist[6]) == 1:
+        if float(dlist[8]) == 1:
             dlist[-1] = 1
             cnt1 = 10
-        elif float(dlist[6]) == 0 and 30 > cnt1 >= 10:
+        elif float(dlist[8]) == 0 and 30 > cnt1 >= 10:
             dlist[-1] = 1
             cnt1 += 1
-        elif float(dlist[7]) == 1:
+        elif float(dlist[9]) == 1:
             dlist[-1] = 2
             cnt1 = 40
-        elif float(dlist[7]) == 0 and 60 > cnt1 >= 40:
+        elif float(dlist[9]) == 0 and 60 > cnt1 >= 40:
             dlist[-1] = 2
             cnt1 += 1
         elif cnt1 == 30 or cnt1 == 60:
@@ -88,6 +88,8 @@ def save(fname, data, index):
             dlist[-1] = 0
             cnt1 = 0
         """
+
+
         dlist[5] = round(float(dlist[5]) * 450, 0)
         dlist[6] = float(dlist[6]) * 100 #accel
         dlist[7] = float(dlist[7]) * 100 #brake
@@ -95,7 +97,31 @@ def save(fname, data, index):
         dlist[3] = round(float(dlist[3]), 6)
         dlist[4] = round(float(dlist[4]), 6)
         dlist[-1] = 0
-
+        if float(dlist[5]) > angle_limit:
+            if float(dlist[8]) == 1:
+                dlist[-1] = 3
+                cnt1 = 10
+            elif float(dlist[8]) == 0 and 30 > cnt1 >= 10:
+                dlist[-1] = 3
+                cnt1 += 1
+            elif cnt1 == 30:
+                dlist[-1] = 3
+                cnt1 = 0
+            else:
+                dlist[-1] = 1
+        if float(dlist[5]) < -1 * angle_limit:
+            if float(dlist[9]) == 1:
+                dlist[-1] = 4
+                cnt1 = 40
+            elif float(dlist[9]) == 0 and 60 > cnt1 >= 40:
+                dlist[-1] = 4
+                cnt1 += 1
+            elif cnt1 == 60:
+                dlist[-1] = 4
+                cnt1 = 0
+            else:
+                dlist[-1] = 2
+        """
         if cnt1 == 0:
             if float(dlist[5]) > angle_limit:
                 label = 1
@@ -186,7 +212,7 @@ def save(fname, data, index):
             cnt1 = 0
             left_most = 0
             right_most = 0
-
+        """
 
         """
         if float(dlist[6])>0:
