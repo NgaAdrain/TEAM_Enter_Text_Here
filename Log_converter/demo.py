@@ -15,7 +15,7 @@ OUT_LOCATION = r'.\csv_data'
 # )
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.dat')]
 
-DATA_TYPE = 'Timestamp,Velocity,accel_X,accel_Y,accel_Z,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label1,Timecheck'
+DATA_TYPE = 'Timestamp,Velocity,accel_X,accel_Z,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label,Timecheck'
 
 
 def save(fname, data, index):
@@ -58,7 +58,9 @@ def save(fname, data, index):
         del dlist[10] #coordinate x
         """
         del dlist[9] #z
+        """
         del dlist[8] #y
+        """
         del dlist[7] #acceleration x
         del dlist[6] #velocity
         """
@@ -120,7 +122,7 @@ def save(fname, data, index):
             dlist[-1] = 2
             cnt1 = 0
         if float(dlist[1]) == 0:
-            dlist[-1] = 5
+            dlist[-1] = 7
 
         """
         if cnt1 == 0:
