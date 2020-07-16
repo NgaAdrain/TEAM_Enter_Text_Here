@@ -1,5 +1,7 @@
 import csv
 import os, sys
+import datetime
+from datetime import timedelta
 #
 from loader.ets2data import Ets2Data
 from loader import Simlog_pb2
@@ -13,7 +15,7 @@ OUT_LOCATION = r'.\csv_data'
 # )
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.dat')]
 
-DATA_TYPE = 'Timestamp,Velocity,accel_X,accel_Y,accel_Z,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label1'
+DATA_TYPE = 'Timestamp,Velocity,accel_X,accel_Y,accel_Z,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label1,Timecheck'
 
 
 def save(fname, data, index):
@@ -23,9 +25,9 @@ def save(fname, data, index):
     wr = csv.writer(fout)
     cnt1 = 0
     cnt2 = 0
-    left_most = 0
-    right_most = 0
-    line_cnt = 0
+    prev_time = 0
+    start_time = 0
+    time_cnt = 0
     label = 0
     angle_limit = 7
 
@@ -225,6 +227,16 @@ def save(fname, data, index):
             dlist.append(0)
         """
         dlist[5] = round(float(dlist[5]),4)
+
+        prev_time = dlist[0][0:4] + "-" + dlist[0][4:6] + "-" + dlist[0][6:8] + " " + dlist[0][9:11] + ":" + dlist[0][11:13] + ":" + dlist[0][13:15]
+        if time_cnt == 0:
+            start_time = datetime.datetime.strptime(prev_time,'%Y-%m-%d %H:%M:%S')
+            time_cnt += 1
+        delta_time = datetime.datetime.strptime(prev_time,'%Y-%m-%d %H:%M:%S') - start_time
+        #delta_time = timedelta(seconds = delta_time.seconds, microseconds = delta_time.microseconds)
+
+        dlist.append(delta_time)
+        #dlist.append(float(dlist[0][9:15]))
 
         wr.writerow(dlist)
 
