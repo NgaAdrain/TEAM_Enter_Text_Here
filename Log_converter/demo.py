@@ -115,10 +115,10 @@ def save(fname, data, index):
             cnt1 += 1
         elif cnt1 == 30 or cnt1 == 60:
             cnt1 = 0
-        elif float(dlist[5]) > angle_limit:
+        elif float(dlist[5]) > angle_limit and float(dlist[1]) != 0:
             dlist[-1] = 1
             cnt1 = 0
-        elif float(dlist[5]) < -1 * angle_limit:
+        elif float(dlist[5]) < -1 * angle_limit and float(dlist[1]) != 0:
             dlist[-1] = 2
             cnt1 = 0
         if float(dlist[1]) == 0:
