@@ -2,7 +2,6 @@ import csv
 import os, sys
 import datetime
 from datetime import timedelta
-#
 from loader.ets2data import Ets2Data
 from loader import Simlog_pb2
 
@@ -69,30 +68,6 @@ def save(fname, data, index):
         del dlist[3] #rpm
         del dlist[2] #gear
         del dlist[1] #odometer
-        """
-        del dlist[0] #timestamp
-        """
-        """
-        if float(dlist[8]) == 1:
-            dlist[-1] = 1
-            cnt1 = 10
-        elif float(dlist[8]) == 0 and 30 > cnt1 >= 10:
-            dlist[-1] = 1
-            cnt1 += 1
-        elif float(dlist[9]) == 1:
-            dlist[-1] = 2
-            cnt1 = 40
-        elif float(dlist[9]) == 0 and 60 > cnt1 >= 40:
-            dlist[-1] = 2
-            cnt1 += 1
-        elif cnt1 == 30 or cnt1 == 60:
-            dlist[-1] = 100
-            cnt1 = 0
-        else:
-            dlist[-1] = 0
-            cnt1 = 0
-        """
-
 
         dlist[5] = round(float(dlist[5]) * 450, 0)
         dlist[6] = float(dlist[6]) * 100 #accel
@@ -235,11 +210,7 @@ def save(fname, data, index):
             start_time = datetime.datetime.strptime(prev_time,'%Y-%m-%d %H:%M:%S')
             time_cnt += 1
         delta_time = datetime.datetime.strptime(prev_time,'%Y-%m-%d %H:%M:%S') - start_time
-        #delta_time = timedelta(seconds = delta_time.seconds, microseconds = delta_time.microseconds)
-
         dlist.append(delta_time)
-        #dlist.append(float(dlist[0][9:15]))
-
         wr.writerow(dlist)
 
         index += 1
