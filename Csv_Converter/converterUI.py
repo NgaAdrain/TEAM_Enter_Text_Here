@@ -59,7 +59,7 @@ class MainWidget(QWidget):
         self.setupUI()
 
     def setupUI(self):
-        self.resize(320, 240)
+        self.resize(1080, 240)
         #self.setAcceptDrops(True)
         self.setWindowTitle("CSV converter")
         self.convertButton = QPushButton("\nConvert\n")

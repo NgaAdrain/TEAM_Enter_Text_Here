@@ -117,6 +117,8 @@ def save(fname, data, index):
         elif float(dlist[5]) < -1 * angle_limit:
             dlist[-1] = 2
             cnt1 = 0
+        if float(dlist[1]) == 0:
+            dlist[-1] = 5
 
         """
         if cnt1 == 0:
