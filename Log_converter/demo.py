@@ -15,6 +15,17 @@ OUT_LOCATION = r'.\csv_data'
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.dat')]
 
 DATA_TYPE = 'Timestamp,Velocity,accel_X,accel_Z,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label,Timecheck'
+TIMESTAMP = 0
+VELOCITY = 1
+ACCELX = 2
+ACCELZ = 3
+STEERING = 4
+ACCEL = 5
+BRAKE = 6
+W_LEFT = 7
+W_RIGHT = 8
+TIMECHECK = 9
+
 
 
 def save(fname, data, index):
@@ -69,33 +80,33 @@ def save(fname, data, index):
         del dlist[2] #gear
         del dlist[1] #odometer
 
-        dlist[4] = round(float(dlist[4]) * 450, 0)
-        dlist[5] = float(dlist[6]) * 100 #accel
-        dlist[6] = float(dlist[7]) * 100 #brake
-        dlist[2] = round(float(dlist[2]), 6)
-        dlist[3] = round(float(dlist[3]), 6)
+        dlist[STEERING] = round(float(dlist[STEERING]) * 450, 0)
+        dlist[ACCEL] = round(float(dlist[ACCEL]) * 100, 0) #accel
+        dlist[BRAKE] = round(float(dlist[BRAKE]) * 100, 0) #brake
+        dlist[ACCELX] = round(float(dlist[ACCELX]), 6)
+        dlist[ACCELZ] = round(float(dlist[ACCELZ]), 6)
         dlist[-1] = 0
-        if float(dlist[7]) == 1:
+        if float(dlist[W_LEFT]) == 1:
             dlist[-1] = 3
             cnt1 = 10
-        elif float(dlist[7]) == 0 and 30 > cnt1 >= 10:
+        elif float(dlist[W_LEFT]) == 0 and 30 > cnt1 >= 10:
             dlist[-1] = 3
             cnt1 += 1
-        elif float(dlist[8]) == 1:
+        elif float(dlist[W_RIGHT]) == 1:
             dlist[-1] = 4
             cnt1 = 40
-        elif float(dlist[8]) == 0 and 60 > cnt1 >= 40:
+        elif float(dlist[W_RIGHT]) == 0 and 60 > cnt1 >= 40:
             dlist[-1] = 4
             cnt1 += 1
         elif cnt1 == 30 or cnt1 == 60:
             cnt1 = 0
-        elif float(dlist[4]) > angle_limit and float(dlist[1]) != 0:
+        elif float(dlist[STEERING]) > angle_limit and float(dlist[VELOCITY]) != 0:
             dlist[-1] = 1
             cnt1 = 0
-        elif float(dlist[4]) < -1 * angle_limit and float(dlist[1]) != 0:
+        elif float(dlist[STEERING]) < -1 * angle_limit and float(dlist[VELOCITY]) != 0:
             dlist[-1] = 2
             cnt1 = 0
-        if float(dlist[1]) == 0:
+        if float(dlist[VELOCITY]) == 0:
             dlist[-1] = 7
 
         """
@@ -202,9 +213,10 @@ def save(fname, data, index):
         else:
             dlist.append(0)
         """
-        dlist[4] = round(float(dlist[4]),4)
+        #dlist[4] = round(float(dlist[4]),4)
 
-        prev_time = dlist[0][0:4] + "-" + dlist[0][4:6] + "-" + dlist[0][6:8] + " " + dlist[0][9:11] + ":" + dlist[0][11:13] + ":" + dlist[0][13:15]
+        prev_time = dlist[TIMESTAMP][0:4] + "-" + dlist[TIMESTAMP][4:6] + "-" + dlist[TIMESTAMP][6:8] + " " + dlist[TIMESTAMP][9:11] +\
+                    ":" + dlist[TIMESTAMP][11:13] + ":" + dlist[TIMESTAMP][13:15]
         if time_cnt == 0:
             start_time = datetime.datetime.strptime(prev_time,'%Y-%m-%d %H:%M:%S')
             time_cnt += 1
