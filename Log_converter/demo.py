@@ -34,7 +34,6 @@ def save(fname, data, index):
     fout = open(out_file, 'w', encoding='utf-8', newline='')
     wr = csv.writer(fout)
     cnt1 = 0
-    cnt2 = 0
     prev_time = 0
     start_time = 0
     time_cnt = 0
@@ -110,7 +109,8 @@ def save(fname, data, index):
             dlist[-1] = 2
             cnt1 = 0
         if float(dlist[VELOCITY]) == 0:
-            dlist[-1] = 7
+            if float(dlist[ACCEL]) < 5:
+                dlist[-1] = 7
 
         #dlist[4] = round(float(dlist[4]),4)
 
