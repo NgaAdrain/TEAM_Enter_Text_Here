@@ -11,39 +11,88 @@ TARGET_LOCATION =  os.getcwd()
 OUT_LOCATION = os.getcwd()
 
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.dat')]
-DATA_TYPE = 'Timestamp,RPM,Velocity,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label'
+DATA_TYPE = 'Timestamp,Velocity,accel_X,accel_Y,accel_Z,Steering_wheel_x,Accelerator,Brake,Winker(left),Winker(right),Label1'
 
 def save(fname, data, index):
-    out_name = fname[:-4] + '.csv'#means remove .dat and add .csv and save
-    out_file = os.path.join(OUT_LOCATION, out_name)#write location and file name
+    out_name = fname[:-4] + '.csv'
+    out_file = os.path.join(OUT_LOCATION, out_name)
     fout = open(out_file, 'w', encoding='utf-8', newline='')
-    wr = csv.writer(fout)#write csv
+    wr = csv.writer(fout)
+    cnt1 = 0
+    angle_limit = 7
 
     # list name
     element_type = str(DATA_TYPE).split(',')
-    wr.writerow(element_type)#make column
+    wr.writerow(element_type)
 
     # data input
-
     for element in data:
         dlist = str(element).split(',')
-        del dlist[19]
-        del dlist[15]
-        del dlist[14]
-        del dlist[13]
-        del dlist[12]
-        del dlist[11]
-        del dlist[10]
-        del dlist[9]
-        del dlist[8]
-        del dlist[7]
-        del dlist[5]
-        del dlist[4]
-        del dlist[2]
-        del dlist[1]
-        dlist[-1] = (float(dlist[-3]) * 1) + (float(dlist[-2])) * 2
+        dlist[6] = round(float(dlist[6]), 0)
+
+        """
+        del dlist[21] #winker right
+        del dlist[20] #winker left
+        """
+        del dlist[19] #clutch
+        """
+        del dlist[18] #brake
+        del dlist[17] #accelerator
+        del dlist[16] #steering x #나중에 -1 추가 예정
+        """
+        del dlist[15] #z
+        del dlist[14] #y
+        del dlist[13] #rotation x
+        del dlist[12] #z
+        del dlist[11] #y
+        del dlist[10] #coordinate x
+        """
+        del dlist[9] #z
+        del dlist[8] #y
+        del dlist[7] #acceleration x
+        del dlist[6] #velocity
+        """
+        del dlist[5] #avg_fuel_consumption
+        del dlist[4] #fuel_level
+        del dlist[3] #rpm
+        del dlist[2] #gear
+        del dlist[1] #odometer
+        """
+        del dlist[0] #timestamp
+        """
+        dlist[5] = round(float(dlist[5]) * 450, 0)
+        dlist[6] = float(dlist[6]) * 100 #accel
+        dlist[7] = float(dlist[7]) * 100 #brake
+        dlist[2] = round(float(dlist[2]), 6)
+        dlist[3] = round(float(dlist[3]), 6)
+        dlist[4] = round(float(dlist[4]), 6)
+        dlist[-1] = 0
+        if float(dlist[1]) == 0:
+            dlist[-1] = 5
+        if float(dlist[8]) == 1:
+            dlist[-1] = 3
+            cnt1 = 10
+        elif float(dlist[8]) == 0 and 30 > cnt1 >= 10:
+            dlist[-1] = 3
+            cnt1 += 1
+        elif float(dlist[9]) == 1:
+            dlist[-1] = 4
+            cnt1 = 40
+        elif float(dlist[9]) == 0 and 60 > cnt1 >= 40:
+            dlist[-1] = 4
+            cnt1 += 1
+        elif cnt1 == 30 or cnt1 == 60:
+            cnt1 = 0
+        elif float(dlist[5]) > angle_limit:
+            dlist[-1] = 1
+            cnt1 = 0
+        elif float(dlist[5]) < -1 * angle_limit:
+            dlist[-1] = 2
+            cnt1 = 0
+        dlist[5] = round(float(dlist[5]),4)
         wr.writerow(dlist)
         index += 1
+        print("check")
     fout.close()
 
 def read(fpath):
@@ -59,7 +108,7 @@ class MainWidget(QWidget):
         self.setupUI()
 
     def setupUI(self):
-        self.resize(1080, 240)
+        self.resize(320, 240)
         #self.setAcceptDrops(True)
         self.setWindowTitle("CSV converter")
         self.convertButton = QPushButton("\nConvert\n")
@@ -74,7 +123,6 @@ class MainWidget(QWidget):
         self.datLocation = QLabel()
         self.outtext = QLabel()
         self.outLocation = QLabel()
-        self.convertState = QLabel()
 
         mainLayout = QVBoxLayout()
 
@@ -86,17 +134,15 @@ class MainWidget(QWidget):
         mainLayout.addWidget(self.datLocation)
         mainLayout.addWidget(self.outtext)
         mainLayout.addWidget(self.outLocation)
-        mainLayout.addWidget(self.convertState)
         self.dattext.setText("dat File Location")
         self.datLocation.setText(TARGET_LOCATION)
         self.outtext.setText("out File Location")
         self.outLocation.setText(OUT_LOCATION)
-        self.convertState.setText("convert state")
         self.setLayout(mainLayout)
 
     def convertCSV(self):
         for fname in TARGET_FILE:
-            #self.convertState.setText(fname)
+            print(TARGET_LOCATION)
             curr_file = os.path.join(TARGET_LOCATION, fname)
             data = read(curr_file)
             save(fname, data, index)
