@@ -76,7 +76,7 @@ def save(fname, data, index):
         del dlist[2]  # gear
         del dlist[1]  # odometer
 
-        dlist[STEERING] = round(float(dlist[STEERING]) * 450, 0)
+        dlist[STEERING] = round(float(dlist[STEERING]) * 450, 0) * -1
         dlist[ACCEL] = round(float(dlist[ACCEL]) * 100, 0)  # accel
         dlist[BRAKE] = round(float(dlist[BRAKE]) * 100, 0)  # brake
         dlist[ACCELX] = round(float(dlist[ACCELX]), 6)
@@ -99,10 +99,10 @@ def save(fname, data, index):
             cnt1 += 1
         elif cnt1 == 30 or cnt1 == 60:
             cnt1 = 0
-        elif float(dlist[STEERING]) > angle_limit and float(dlist[VELOCITY]) != 0:
+        elif float(dlist[STEERING]) < -1 * angle_limit and float(dlist[VELOCITY]) != 0 and float(dlist[W_LEFT]) == 0:
             dlist[-1] = 1
             cnt1 = 0
-        elif float(dlist[STEERING]) < -1 * angle_limit and float(dlist[VELOCITY]) != 0:
+        elif float(dlist[STEERING]) > angle_limit and float(dlist[VELOCITY]) != 0 and float(dlist[W_RIGHT]) == 0:
             dlist[-1] = 2
             cnt1 = 0
         if float(dlist[VELOCITY]) == 0:
@@ -112,9 +112,8 @@ def save(fname, data, index):
         # dlist[4] = round(float(dlist[4]),4)
 
         # Timecheck 추가
-        prev_time = dlist[TIMESTAMP][0:4] + "-" + dlist[TIMESTAMP][4:6] + "-" + dlist[TIMESTAMP][6:8] + " " + dlist[
-                                                                                                                  TIMESTAMP][
-                                                                                                              9:11] + \
+        prev_time = dlist[TIMESTAMP][0:4] + "-" + dlist[TIMESTAMP][4:6] + "-" + dlist[TIMESTAMP][6:8] + " " + \
+                    dlist[TIMESTAMP][9:11] + \
                     ":" + dlist[TIMESTAMP][11:13] + ":" + dlist[TIMESTAMP][13:15]
         if time_cnt == 0:
             start_time = datetime.datetime.strptime(prev_time, '%Y-%m-%d %H:%M:%S')
