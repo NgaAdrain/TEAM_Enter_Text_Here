@@ -1,0 +1,16 @@
+A-Timestamp		년_시분초_밀리초?
+B-Odometer		주행거리계
+C-Gear			필요없음
+D-RPM			엔진회전수
+E-Fuel_level		연료남은거
+F-Avg_comsumption	연료소모율
+G-Velocity		속도
+H-Acceleration_x		x축 가속
+I-Acceleration_y		y축 가속
+J-Acceleration_z		z축 가속
+K-Coordinate_x		x축 위치
+L-Coordinate_y		y축 위치
+M-Coordinate_z		z축 위치
+N-Rotation_x		x축 회전
+O-Rotation_y		y축 회전
+P-Rotation_z		z축 회전
