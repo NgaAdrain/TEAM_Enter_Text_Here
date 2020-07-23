@@ -81,6 +81,7 @@ def save(fname, data, index):
         dlist[BRAKE] = round(float(dlist[BRAKE]) * 100, 0)  # brake
         dlist[ACCELX] = round(float(dlist[ACCELX]), 6)
         dlist[ACCELZ] = round(float(dlist[ACCELZ]), 6)
+        dlist[VELOCITY] = round(float(dlist[VELOCITY]), 0)
 
         dlist[-1] = 0
 
@@ -105,7 +106,7 @@ def save(fname, data, index):
         elif float(dlist[STEERING]) > angle_limit and float(dlist[VELOCITY]) != 0 and float(dlist[W_RIGHT]) == 0:
             dlist[-1] = 2
             cnt1 = 0
-        if float(dlist[VELOCITY]) == 0:
+        if float(dlist[VELOCITY]) < 0.1:
             if float(dlist[ACCEL]) < 5:
                 dlist[-1] = 7
 
