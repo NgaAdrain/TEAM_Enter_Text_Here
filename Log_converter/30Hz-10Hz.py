@@ -20,52 +20,67 @@ W_LEFT = 6
 W_RIGHT = 7
 TIMECHECK = 8
 
+#정규화 용 변수
+NOR_MAX = 31.75
+NOR_MIN = -32
+VELOCITY_MAX = 100
+VELOCITY_MIN = 0
+ACCEL_X_MAX = 0.6
+ACCEL_X_MIN = -0.6
+STEERING_MAX = 225
+STEERING_MIN = -225
+ACCEL_MAX = 70
+ACCEL_MIN = 0
+BRAKE_MAX = 50
+BRAKE_MIN = 0
+
+
 def normalize(line):
 #VELOCITY
-    if float(line[VELOCITY]) >= 100:
-        line[VELOCITY] = 31.75
-    elif float(line[VELOCITY]) >= 50:
-        line[VELOCITY] = round((float(line[VELOCITY]) - 50) / 50 * 31.75, 2)
-    elif float(line[VELOCITY]) > 0:
+    if float(line[VELOCITY]) >= VELOCITY_MAX:
+        line[VELOCITY] = NOR_MAX
+    elif float(line[VELOCITY]) >= (VELOCITY_MAX/2):
+        line[VELOCITY] = round((float(line[VELOCITY]) - 50) / 50 * NOR_MAX, 2)
+    elif float(line[VELOCITY]) > VELOCITY_MIN:
         line[VELOCITY] = round((float(line[VELOCITY]) - 50) / 50 * 32, 2)
     else:
-        line[VELOCITY] = -32
+        line[VELOCITY] = NOR_MIN
 #ACCEL_X
-    if float(line[ACCELX]) >= 0.6:
-        line[ACCELX] = 31.75
+    if float(line[ACCELX]) >= ACCEL_X_MAX:
+        line[ACCELX] = NOR_MAX
     elif float(line[ACCELX]) >= 0:
-        line[ACCELX] = round(float(line[ACCELX]) / 0.6 * 31.75, 2)
-    elif float(line[ACCELX]) > -0.6:
+        line[ACCELX] = round(float(line[ACCELX]) / 0.6 * NOR_MAX, 2)
+    elif float(line[ACCELX]) > ACCEL_X_MIN:
         line[ACCELX] = round(float(line[ACCELX]) / 0.6 * 32, 2)
     else:
-        line[ACCELX] = -32
+        line[ACCELX] = NOR_MIN
 #STEERING
-    if float(line[STEERING]) >= 270:
-        line[STEERING] = 31.75
+    if float(line[STEERING]) >= STEERING_MAX:
+        line[STEERING] = NOR_MAX
     elif float(line[STEERING]) >= 0:
-        line[STEERING] = round(float(line[STEERING]) / 270 * 31.75, 2)
-    elif float(line[STEERING]) > -270:
+        line[STEERING] = round(float(line[STEERING]) / 270 * NOR_MAX, 2)
+    elif float(line[STEERING]) > STEERING_MIN:
         line[STEERING] = round(float(line[STEERING]) / 270 * 32, 2)
     else:
-        line[STEERING] = -32
+        line[STEERING] = NOR_MIN
 #ACCEL
-    if float(line[ACCEL]) >= 70:
-        line[ACCEL] = 31.75
-    elif float(line[ACCEL]) >= 35:
-        line[ACCEL] = round((float(line[ACCEL]) - 35) / 35 * 31.75, 2)
-    elif float(line[ACCEL]) > 0:
+    if float(line[ACCEL]) >= ACCEL_MAX:
+        line[ACCEL] = NOR_MAX
+    elif float(line[ACCEL]) >= (ACCEL_MAX/2):
+        line[ACCEL] = round((float(line[ACCEL]) - 35) / 35 * NOR_MAX, 2)
+    elif float(line[ACCEL]) > ACCEL_MIN:
         line[ACCEL] = round((float(line[ACCEL]) - 35) / 35 * 32, 2)
     else:
-        line[ACCEL] = -32
+        line[ACCEL] = NOR_MIN
 #BRAKE
-    if float(line[BRAKE]) >= 50:
-        line[BRAKE] = 31.75
-    elif float(line[BRAKE]) >= 25:
-        line[BRAKE] = round((float(line[BRAKE])-25) / 25 * 31.75, 2)
-    elif float(line[BRAKE]) > 0:
+    if float(line[BRAKE]) >= BRAKE_MAX:
+        line[BRAKE] = NOR_MAX
+    elif float(line[BRAKE]) >= (BRAKE_MAX/2):
+        line[BRAKE] = round((float(line[BRAKE])-25) / 25 * NOR_MAX, 2)
+    elif float(line[BRAKE]) > BRAKE_MIN:
         line[BRAKE] = round((float(line[BRAKE])-25) / 25 * 32, 2)
     else:
-        line[BRAKE] = -32
+        line[BRAKE] = NOR_MIN
 
 
 def save(fname, fpath):

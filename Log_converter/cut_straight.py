@@ -22,6 +22,8 @@ TIMECHECK = 8
 LABEL = 9
 
 
+
+
 def save(fname, fpath):
     file = open(fpath, 'r')
     reader = csv.reader(file)
@@ -39,7 +41,7 @@ def save(fname, fpath):
             if cnt == 0:
                 wr.writerow(line)
                 cnt += 1
-            elif cnt < 3:
+            elif cnt < 1:
                 cnt += 1
             else:
                 cnt = 0
