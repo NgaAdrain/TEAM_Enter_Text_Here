@@ -82,44 +82,49 @@ def normalize(line):
     else:
         line[BRAKE] = NOR_MIN
 
+def makeTriple(reader, index, is_start, cnt, wr1):
+    cnt = 0;
+    for line in reader:
+        if is_start:
+            wr1.writerow(line)
+            is_start = False
+        elif cnt == index:
+            normalize(line)
+            wr1.writerow(line)
+            cnt += 1
+        elif cnt < index:
+            cnt += 1
+        else:
+            cnt = 0
+
 
 def save(fname, fpath):
     file = open(fpath, 'r')
     reader = csv.reader(file)
     out_name1 = fname[:-4] + '_10Hz_normalized_first.csv'
-    out_name2 = fname[:-4] + '_10Hz_normalized_second.csv'
-    out_name3 = fname[:-4] + '_10Hz_normalized_third.csv'
+    #out_name2 = fname[:-4] + '_10Hz_normalized_second.csv'
+    #out_name3 = fname[:-4] + '_10Hz_normalized_third.csv'
     out_file1 = os.path.join(OUT_LOCATION, out_name1)
-    out_file2 = os.path.join(OUT_LOCATION, out_name2)
-    out_file3 = os.path.join(OUT_LOCATION, out_name3)
+    #out_file2 = os.path.join(OUT_LOCATION, out_name2)
+    #out_file3 = os.path.join(OUT_LOCATION, out_name3)
     fout1 = open(out_file1, 'w', encoding='utf-8', newline='')
-    fout2 = open(out_file2, 'w', encoding='utf-8', newline='')
-    fout3 = open(out_file3, 'w', encoding='utf-8', newline='')
+    #fout2 = open(out_file2, 'w', encoding='utf-8', newline='')
+    #fout3 = open(out_file3, 'w', encoding='utf-8', newline='')
     wr1 = csv.writer(fout1)
-    wr1 = csv.writer(fout2)
-    wr1 = csv.writer(fout3)
+    #wr2 = csv.writer(fout2)
+    #wr3 = csv.writer(fout3)
     cnt = 0
     is_start = True
-    for line in reader:
-        if is_start:
-            wr1.writerow(line)
-            wr2.writerow(line)
-            wr3.writerow(line)
-            is_start = False
-        elif cnt == 0:
-            normalize(line)
-            wr1.writerow(line)
-            cnt += 1
-        elif cnt < 2:
-            normalize(line)
-            wr2.writerow(line)
-            cnt += 1
-        else:
-            normalize(line)
-            wr3.writerow(line)
-            cnt = 0
+    makeTriple(reader,0,is_start,cnt, wr1)
+    file.seek(0)
+    is_start = False
+    makeTriple(reader, 1, is_start, cnt, wr1)
+    file.seek(0)
+    makeTriple(reader, 2, is_start, cnt, wr1)
 
-    fout.close()
+    fout1.close()
+    #fout2.close()
+    #fout3.close()
 
 
 def read(fpath):
