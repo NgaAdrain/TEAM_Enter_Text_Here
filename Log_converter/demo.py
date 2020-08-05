@@ -87,16 +87,16 @@ def save(fname, data, index):
 
         # 기초 Labeling
         if float(dlist[W_LEFT]) == 1:
-            dlist[-1] = 5
+            dlist[-1] = 3
             cnt1 = 10
         elif float(dlist[W_LEFT]) == 0 and 30 > cnt1 >= 10:
-            dlist[-1] = 5
+            dlist[-1] = 3
             cnt1 += 1
         elif float(dlist[W_RIGHT]) == 1:
-            dlist[-1] = 6
+            dlist[-1] = 4
             cnt1 = 40
         elif float(dlist[W_RIGHT]) == 0 and 60 > cnt1 >= 40:
-            dlist[-1] = 6
+            dlist[-1] = 4
             cnt1 += 1
         elif cnt1 == 30 or cnt1 == 60:
             cnt1 = 0
