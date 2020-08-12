@@ -22,9 +22,10 @@ def save(fname, fpath):
             wr.writerow(line)
             is_start = False
         else:
-            output = [(line[0]),(line[1]),(line[2]),(float(line[3]) * -1),(line[4]),(line[5]),(line[6]),(line[7]),(line[8]),(line[9]),(line[10])]
-            print(float(line[3]) * -1, output[3])
-            wr.writerow(output)
+            #output = [(line[0]),(line[1]),(line[2]),(float(line[3]) * -1),(line[4]),(line[5]),(line[6]),(line[7]),(line[8]),(line[9]),(line[10])]
+            #print(float(line[3]) * -1, output[3])
+            line[3] = float(line[3]) * -1
+            wr.writerow(line)
     fout.close()
 
 

@@ -15,7 +15,7 @@ DATA_TYPE = 'Timestamp,Velocity,accel_X,Steering_wheel_x,' \
 TIMESTAMP = 0
 VELOCITY = 1
 ACCELX = 2
-#ACCELZ = 3
+ROTATIONZ = 3
 STEERING = 3
 ACCEL = 4
 BRAKE = 5
@@ -56,7 +56,7 @@ def save(fname, data, index):
         del dlist[17] #accelerator
         del dlist[16] #steering x #나중에 -1 추가 예정
         """
-        del dlist[15]  # z
+        #del dlist[15]  # z
         del dlist[14]  # y
         del dlist[13]  # rotation x
         del dlist[12]  # z
@@ -109,7 +109,7 @@ def save(fname, data, index):
         if float(dlist[VELOCITY]) < 0.1:
             if float(dlist[ACCEL]) < 5:
                 dlist[-1] = 7
-
+        dlist[ROTATIONZ] = float(dlist[ROTATIONZ] * -1)
         # dlist[4] = round(float(dlist[4]),4)
 
         # Timecheck 추가

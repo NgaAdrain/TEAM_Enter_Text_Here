@@ -15,13 +15,13 @@ DATA_TYPE = 'Timestamp,Velocity,accel_X,Steering_wheel_x,' \
 TIMESTAMP = 0
 VELOCITY = 1
 ACCELX = 2
-#ACCELZ = 3
-STEERING = 3
-ACCEL = 4
-BRAKE = 5
-W_LEFT = 6
-W_RIGHT = 7
-TIMECHECK = 8
+ROTATIONZ = 3
+STEERING = 4
+ACCEL = 5
+BRAKE = 6
+W_LEFT = 7
+W_RIGHT = 8
+TIMECHECK = 9
 
 
 def save(fname, data, index):
@@ -56,7 +56,7 @@ def save(fname, data, index):
         del dlist[17] #accelerator
         del dlist[16] #steering x #나중에 -1 추가 예정
         """
-        del dlist[15]  # z
+        #del dlist[15]  # z
         del dlist[14]  # y
         del dlist[13]  # rotation x
         del dlist[12]  # z
@@ -68,7 +68,7 @@ def save(fname, data, index):
         del dlist[8]  # y
         """
         del dlist[7] #acceleration x
-        del dlist[6] #velocity
+        del dlist[6] #velocity  
         """
         del dlist[5]  # avg_fuel_consumption
         del dlist[4]  # fuel_level
@@ -86,6 +86,7 @@ def save(fname, data, index):
         dlist[-1] = 0
 
         # 기초 Labeling
+
         if float(dlist[W_LEFT]) == 1:
             dlist[-1] = 5
             cnt1 = 10
@@ -109,7 +110,7 @@ def save(fname, data, index):
         if float(dlist[VELOCITY]) < 0.1:
             if float(dlist[ACCEL]) < 5:
                 dlist[-1] = 7
-
+        dlist[ROTATIONZ] = float(dlist[ROTATIONZ] * -1)
         # dlist[4] = round(float(dlist[4]),4)
 
         # Timecheck 추가
