@@ -8,20 +8,20 @@ TARGET_LOCATION = r'.\log_data'
 OUT_LOCATION = r'.\csv_data'
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.dat')]
 
-DATA_TYPE = 'Timestamp,Velocity,accel_X,Steering_wheel_x,' \
+DATA_TYPE = 'Timestamp,Velocity,Accel_X,Rotate_Z,Steering_wheel_x,' \
             'Accelerator,Brake,Winker(left),Winker(right),Label,Timecheck'
 
 # CSV 데이터 열
 TIMESTAMP = 0
 VELOCITY = 1
 ACCELX = 2
-ROTATIONZ = 3
-STEERING = 3
-ACCEL = 4
-BRAKE = 5
-W_LEFT = 6
-W_RIGHT = 7
-TIMECHECK = 8
+ROTATEZ = 3
+STEERING = 4
+ACCEL = 5
+BRAKE = 6
+W_LEFT = 7
+W_RIGHT = 8
+TIMECHECK = 9
 
 
 def save(fname, data, index):
@@ -80,7 +80,7 @@ def save(fname, data, index):
         dlist[ACCEL] = round(float(dlist[ACCEL]) * 100, 0)  # accel
         dlist[BRAKE] = round(float(dlist[BRAKE]) * 100, 0)  # brake
         dlist[ACCELX] = round(float(dlist[ACCELX]), 6)
-        #dlist[ACCELZ] = round(float(dlist[ACCELZ]), 6)
+        dlist[ROTATEZ] = round(float(dlist[ROTATEZ]) * 10000, 6)
         dlist[VELOCITY] = round(float(dlist[VELOCITY]), 0)
 
         dlist[-1] = 0
@@ -109,7 +109,7 @@ def save(fname, data, index):
         if float(dlist[VELOCITY]) < 0.1:
             if float(dlist[ACCEL]) < 5:
                 dlist[-1] = 7
-        dlist[ROTATIONZ] = float(dlist[ROTATIONZ] * -1)
+        dlist[ROTATEZ] = float(dlist[ROTATEZ] * -1)
         # dlist[4] = round(float(dlist[4]),4)
 
         # Timecheck 추가
