@@ -4,7 +4,7 @@ import os, sys
 TARGET_LOCATION = r'.\csv_data\10Hz'
 OUT_LOCATION = r'.\csv_data\10Hz\combined'
 TARGET_FILE = [file for file in os.listdir(TARGET_LOCATION) if file.endswith('.csv')]
-DATA_TYPE = 'Timestamp,Velocity,accel_X,Steering_wheel_x,' \
+DATA_TYPE = 'Timestamp,Velocity,Accel_X,Rotate_Z,Steering_wheel_x,' \
             'Accelerator,Brake,Winker(left),Winker(right),Label,Timecheck'
 
 
