@@ -4,7 +4,7 @@
 
 201524582 H.S Jeong (TensorFlow Modeling)
 
-201524473 H.J Bang (Sensor Data Modeling)
+201524473 H.J Bang (Data Processing)
 
 201524527 S.J Lee (UI Modeling)
 
