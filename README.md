@@ -2,16 +2,16 @@
 <h1>Pusan Nat'l Univ Department of CSE</h1>
 <h2>Implementation of Sim2Real Technology For Vehicle Sensor Data</h2>
 
-201524582 H.S Jeong 
+201524582 H.S Jeong (TensorFlow Modeling)
 
-201524473 H.J Bang join
+201524473 H.J Bang (Sensor Data Modeling)
 
-201524527 S.J Lee join
+201524527 S.J Lee (UI Modeling)
 
 ==============================
 
-µ¥ÀÌÅÍ ÆÄÀÏÀº ¹«Á¶°Ç µ¥ÀÌÅÍ¿¡ ¶óº§º°·Î ÀúÀå
+ë°ì´í„° íŒŒì¼ì€ ë¬´ì¡°ê±´ ë°ì´í„°ì— ë¼ë²¨ë³„ë¡œ ì €ìž¥
 
-º¯È¯ ÇÑ ÆÄÀÏÀº ¹«Á¶°Ç º¯È¯ÈÄ µ¥ÀÌÅÍ Æú´õ¿¡ ¶óº§º°·Î ÀúÀå
+ë³€í™˜ í•œ íŒŒì¼ì€ ë¬´ì¡°ê±´ ë³€í™˜í›„ ë°ì´í„° í´ë”ì— ë¼ë²¨ë³„ë¡œ ì €ìž¥
 
-º¯°æ »çÇ× ÀÖÀ¸¸é °¢ Æú´õ Version¿¡ Á¤¸®
+ë³€ê²½ ì‚¬í•­ ìžˆìœ¼ë©´ ê° í´ë” Versionì— ì •ë¦¬
