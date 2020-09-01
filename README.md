@@ -6,7 +6,7 @@
 
 201524473 H.J Bang (Data Processing)
 
-201524527 S.J Lee (UI Modeling)
+201524527 S.J Lee (GUI Design)
 
 ==============================
 
