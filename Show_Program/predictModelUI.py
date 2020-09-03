@@ -1,4 +1,3 @@
-#import csv
 import cv2
 import sys, os
 import pandas as pd
@@ -15,7 +14,7 @@ from keras.models import load_model
 
 from loader.ets2data import Ets2Data
 from loader import Simlog_pb2
-print(keras.__version__)
+
 VIDEO_FILE_LOCATION =  os.getcwd()
 VIDEO_DIR_LOCATION = os.getcwd()
 CSV_FILE_LOCATION = os.getcwd()
@@ -24,17 +23,17 @@ CSV_DIR_LOCATION = os.getcwd()
 state_list = ["직진", "좌커브", "우커브", "좌회전", "우회전", "좌차선", "우차선", "정지"]
 WINDOW_SIZE = 48
 issim = 0
+button_clicked = 0
+data_loaded = 0
 
 class ViewerUI(QWidget):
     def __init__(self):
         super().__init__()
         self.defUIsetting()
 
-
-
     def defUIsetting(self):
         self.setGeometry(0,0,600,300)
-
+        self.setWindowTitle("Car Driving Status Prediction")
         predictFont = QtGui.QFont()
         predictFont.setPointSize(20)
 
@@ -90,7 +89,6 @@ class ViewerUI(QWidget):
         self.runButton.clicked.connect(self.show_image)
         self.runButton.setDisabled(True)
 
-
         self.setLayout(predict_layout)
 
     def list_clicked(self,index):
@@ -104,7 +102,7 @@ class ViewerUI(QWidget):
                     self.runButton.setEnabled(True)
                     self.stateMsgLabel.setText("File Matched")
                 else:
-                    self.stateMsgLabel.setText("File Not Exist")
+                    self.stateMsgLabel.setText("File Not Exist\ncheck directory\nOr make file name same")
                     self.runButton.setDisabled(True)
             else:
                 self.stateMsgLabel.setText("File is Not CSV File")
@@ -114,14 +112,13 @@ class ViewerUI(QWidget):
     def video_clicked(self):
         global VIDEO_DIR_LOCATION
         VIDEO_DIR_LOCATION = QFileDialog.getExistingDirectory()
-        print(VIDEO_DIR_LOCATION)
+        #print(VIDEO_DIR_LOCATION)
 
     def csv_clicked(self):
         global CSV_DIR_LOCATION
         CSV_DIR_LOCATION = os.path.abspath(QFileDialog.getExistingDirectory())
         self.csvFileList.setRootIndex(self.csvBox.setRootPath(CSV_DIR_LOCATION))
-        print(CSV_DIR_LOCATION)
-
+        #print(CSV_DIR_LOCATION)
 
     def show_image(self):
         pop_data = pd.read_csv(CSV_FILE_LOCATION, encoding='utf-8')
@@ -131,11 +128,12 @@ class ViewerUI(QWidget):
             label_list.append(label)
         predicted_list = dataPredict(pop_data)
         label_list = label_list[WINDOW_SIZE - 1:-1]
-        if(len(predicted_list) == len(label_list)):
-            accuracy = accuracycheck(predicted_list,label_list)
-            accuracy = (round(accuracy,3) * 100)
+        if (len(predicted_list) == len(label_list)):
+            accuracy = accuracycheck(predicted_list, label_list)
+            accuracy = (round(accuracy, 3) * 100)
             self.percentLable.setText(str(accuracy) + '%')
-        else: self.stateMsgLabel.setText("data low not same")
+        else:
+            self.stateMsgLabel.setText("data low not same")
         video = cv2.VideoCapture(VIDEO_FILE_LOCATION)
         print(video.get(cv2.CAP_PROP_FRAME_COUNT))
         video_skip = 0
@@ -152,19 +150,22 @@ class ViewerUI(QWidget):
             if (video_skip < dFrame_data):
                 video_skip = video_skip + 1
                 continue
-            cv2.imshow("video",rframe)
+            cv2.imshow("(q to Quit, s to Stop)",rframe)
             if ret:
                 if ((label_index % 3 == 0)) :
                     state_index = int(label_list[int(label_index/3)])
                     self.realLabel.setText(state_list[state_index])
                     state_index = int(predicted_list[int(label_index/3)])
                     self.resultLabel.setText(state_list[state_index])
-
                 label_index = label_index + 1
-                if cv2.waitKey(15) & 0xFF == ord('q'):
+                kinput = cv2.waitKey(15)
+                if kinput & 0xFF == ord('q'):
                     video.release()
                     cv2.destroyAllWindows()
                     break
+                elif kinput & 0xFF == ord('s'):
+                    cv2.waitKey(0) == ord('s')
+
 
 def accuracycheck(list1, list2):
     accuracy = 0
@@ -172,8 +173,6 @@ def accuracycheck(list1, list2):
         if list1[check] == list2[check]: accuracy = accuracy + 1
     accuracy = accuracy / len(list2)
     return accuracy
-
-
 
 def read(fpath):
     with open(fpath, 'rb') as fin:
@@ -185,7 +184,7 @@ def read(fpath):
 def dataPredict(data_file):
     global  issim
     if(data_file.columns[0] == "Timestamp"):
-        print("simulation data")
+        #print("simulation data")
         issim = 1
         data_file_time = data_file.pop('Timestamp')
         data_file.drop(['Winker(left)','Winker(right)','Timecheck'],axis = 'columns',inplace = True)
@@ -202,21 +201,16 @@ def dataPredict(data_file):
     for i in range(WINDOW_SIZE, real_array.shape[0] + 1, 1):
       real_dataset_data.append(real_array[i-WINDOW_SIZE:i])
     re_data = np.array(real_dataset_data)
-    print(re_data.shape)
+    #print(re_data.shape)
     re_c_data = re_data.reshape(-1,6,WINDOW_SIZE,1)
 
-    cnn_model_main = load_model('./Sim2Real_Model_CNN_GAP_Final.h5')
-    cnn_model_sub = load_model('./Sim2Real_Model_CNN_FLATTEN_Final.h5')
-    #loaded_model_predictions = loaded_model.predict(re_c_data)
+    cnn_model_main = load_model('Sim2Real_Model_CNN_GAP_Final.h5')
+    cnn_model_sub = load_model('Sim2Real_Model_CNN_FLATTEN_Final.h5')
     cnn_test_predictions_1 = cnn_model_main.predict(re_c_data)
     cnn_test_predictions_2 = cnn_model_sub.predict(re_c_data)
     predicted_list = model_prediction_merge(cnn_test_predictions_1,cnn_test_predictions_2)
-    print(len(predicted_list))
+    #print(len(predicted_list))
     return predicted_list
-    #for pCount in re_c_data:
-    #    index_data = np.argmax(loaded_model_predictions[input_count])
-    #    predicted_list.append(index_data)
-    #    input_count = input_count + 1
 
 def model_prediction_merge(prediction_1,prediction_2):
   count = 0
@@ -227,7 +221,7 @@ def model_prediction_merge(prediction_1,prediction_2):
     else:
         cnn_prediction.append(np.argmax(main_pred))
     count = count + 1
-  #cnn_prediction = np.array(cnn_prediction)
+
   return cnn_prediction
 
 def range_limitation(array):
@@ -246,7 +240,6 @@ def range_limitation(array):
   STEERING_MIN = -270
   ACCEL_MAX = 80
   BRAKE_MAX = 50
-  #length = int(len(array)/25)
   for i in range(len(array)):
     array[i][VELOCITY] = round(array[i][VELOCITY],0)
     if(array[i][VELOCITY]>=VELOCITY_MAX):    #MAX
