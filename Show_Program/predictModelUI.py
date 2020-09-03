@@ -3,8 +3,8 @@ import cv2
 import sys, os
 import pandas as pd
 import numpy as np
-#import tensorflow as tf
-#from tensorflow import keras
+import tensorflow as tf
+from tensorflow import keras
 
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import *
@@ -15,7 +15,7 @@ from keras.models import load_model
 
 from loader.ets2data import Ets2Data
 from loader import Simlog_pb2
-
+print(keras.__version__)
 VIDEO_FILE_LOCATION =  os.getcwd()
 VIDEO_DIR_LOCATION = os.getcwd()
 CSV_FILE_LOCATION = os.getcwd()
@@ -205,8 +205,8 @@ def dataPredict(data_file):
     print(re_data.shape)
     re_c_data = re_data.reshape(-1,6,WINDOW_SIZE,1)
 
-    cnn_model_main = load_model('Sim2Real_Model_CNN_GAP_Final.h5')
-    cnn_model_sub = load_model('Sim2Real_Model_CNN_FLATTEN_Final.h5')
+    cnn_model_main = load_model('./Sim2Real_Model_CNN_GAP_Final.h5')
+    cnn_model_sub = load_model('./Sim2Real_Model_CNN_FLATTEN_Final.h5')
     #loaded_model_predictions = loaded_model.predict(re_c_data)
     cnn_test_predictions_1 = cnn_model_main.predict(re_c_data)
     cnn_test_predictions_2 = cnn_model_sub.predict(re_c_data)

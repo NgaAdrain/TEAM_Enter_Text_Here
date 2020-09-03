@@ -1,0 +1,20 @@
+keras version : 2.4.3이지만
+tensorflow로 부터 keras를 import해서
+2.4.0을 써야하며
+tensorflow의 버전은 2.3.0을 사용해야한다
+EU : 추출한 모델의 버전이
+Tensorflow version : 2.3.0
+keras version : 2.4.0이기 때문이다!
+그리고 안쓰인다고 해서 tensorflow를 import안할게아니라
+import tensorflow as tf와
+from tensorflow import keras를 해줘야
+모델과 버전이 일치한다!
+버전 확인은 
+powershell이나 cmd에서 python명령어를 통해 python에 들어간 다음
+import tensorflow as tf
+tf.__version__ 으로 확인
+from tensorflow import keras
+keras.__version__ 으로 확인
+그리고 import keras로 하게 되면
+2.4.3으로 나올 가능성이 있다
+이경우 모델을 제대로 불러들이지 못한다.
