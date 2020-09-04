@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
 
-from keras.models import load_model
+#from keras.models import load_model
 
 from loader.ets2data import Ets2Data
 from loader import Simlog_pb2
@@ -204,8 +204,8 @@ def dataPredict(data_file):
     #print(re_data.shape)
     re_c_data = re_data.reshape(-1,6,WINDOW_SIZE,1)
 
-    cnn_model_main = load_model('Sim2Real_Model_CNN_GAP_Final.h5')
-    cnn_model_sub = load_model('Sim2Real_Model_CNN_FLATTEN_Final.h5')
+    cnn_model_main = keras.models.load_model('Sim2Real_Model_CNN_GAP_Final.h5')
+    cnn_model_sub = keras.models.load_model('Sim2Real_Model_CNN_FLATTEN_Final.h5')
     cnn_test_predictions_1 = cnn_model_main.predict(re_c_data)
     cnn_test_predictions_2 = cnn_model_sub.predict(re_c_data)
     predicted_list = model_prediction_merge(cnn_test_predictions_1,cnn_test_predictions_2)
