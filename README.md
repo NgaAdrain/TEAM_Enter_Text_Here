@@ -3,10 +3,13 @@
 <h2>Implementation of Sim2Real Technology For Vehicle Sensor Data</h2>
 
 201524582 H.S Jeong (TensorFlow Modeling)
+- https://github.com/NgaAdrain
 
 201524473 H.J Bang (Data Processing)
+- https://github.com/Banghyungjin
 
 201524527 S.J Lee (GUI Design)
+- https://github.com/Oldale
 
 ==============================
 
@@ -31,7 +34,7 @@
 -> /Data_Varification/Data_Varify_0724_HJ.ipynb<br>
 -> /Data_Varification/CSV_data_verification_Bang.ipynb
 - https://github.com/NgaAdrain/TEAM_Enter_Text_Here/tree/master/Data_Varification
--> /Reports/수치 종합.xlsx<br>
+<br>-> /Reports/수치 종합.xlsx
 - https://github.com/NgaAdrain/TEAM_Enter_Text_Here/tree/master/Reports
 4. 동작하는 프로그램 확인<br>
 -> /Show_Program_exe/predictModelUI 폴더 전체를 다운 받고 predictModelUI.exe 실행<br>
@@ -40,3 +43,6 @@
 5. 최종 보고서<br>
 -> /Reports/2020최종보고서_38_여기에 팀 이름 입력_자동차 상태 분석을 위한 Sim2Real 딥러닝 기반 자동차 동작 인식 시스템.pdf
 - https://github.com/NgaAdrain/TEAM_Enter_Text_Here/blob/master/Reports/
+6. 시뮬레이터 데이터 변환기<br>
+-> /Log_converter/Readme.txt 참고<br>
+- https://github.com/NgaAdrain/TEAM_Enter_Text_Here/tree/master/Log_converter
