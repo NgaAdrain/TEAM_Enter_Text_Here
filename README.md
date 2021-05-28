@@ -26,7 +26,7 @@
 1. 프로그램이 어떻게 동작하는지 볼 때<br>
 -> /Reports/발표/2020시연동영상_38_여기에 팀 이름 입력.mp4
 - https://github.com/NgaAdrain/TEAM_Enter_Text_Here/tree/master/Reports/%EB%B0%9C%ED%91%9C
-2. 모델이 어떻게 구현되어 있는지 볼 때 (데이터 처리 -> 모델 설계 -> 학습 -> 예측 결과)<br>
+2. [모델이 어떻게 구현되어 있는지 볼 때](https://nbviewer.jupyter.org/github/NgaAdrain/TEAM_Enter_Text_Here/blob/master/Data_Varification/20200901_LAST_MODEL_Sim2Real.ipynb) (데이터 처리 -> 모델 설계 -> 학습 -> 예측 결과)<br>
 -> /Data_Varification/20200901_FINAL_MODEL.ipynb 학습된 모델을 어떻게 사용하는 지에 관한 노트북<br>
 -> /Data_Varification/20200901_LAST_MODEL_Sim2Real.ipynb 최종 모델이 어떻게 구현되었는 지에 관한 노트북
 - https://github.com/NgaAdrain/TEAM_Enter_Text_Here/tree/master/Data_Varification
